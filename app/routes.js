@@ -3,6 +3,7 @@
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
 import { getAsyncInjectors } from './utils/asyncInjectors';
+import AuthService from './utils/authService'
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
@@ -11,6 +12,16 @@ const errorLoading = (err) => {
 const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
+
+const auth = new AuthService(__AUTH0_CLIENT_ID__, __AUTH0_DOMAIN__);
+
+// validate authentication for private routes
+const requireAuth = (nextState, replace) => {
+  if (!auth.loggedIn()) {
+    replace({ pathname: '/login' })
+  }
+}
+
 
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
@@ -41,6 +52,7 @@ export default function createRoutes(store) {
     }, {
       path: '/features',
       name: 'features',
+      onEnter: requireAuth,
       getComponent(nextState, cb) {
         System.import('containers/FeaturePage')
           .then(loadModule(cb))
