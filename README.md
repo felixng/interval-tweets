@@ -1,3 +1,8 @@
+<div align="center">
+A redux react project streaming tweets, base on the <a href="https://coveralls.io/repos/github/mxstbr/react-boilerplate">react-boilterplate</a>
+</div>
+<br />
+
 <img src="https://raw.githubusercontent.com/mxstbr/react-boilerplate-brand/master/assets/banner-metal-optimized.jpg" alt="react boilerplate banner" align="center" />
 
 <br />
